@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data to Discord Webhook</title>
+</head>
+<body>
+    <h2>Send Data to Discord Webhook</h2>
+    <form id="myForm">
+        <label for="input1">Input 1:</label><br>
+        <input type="text" id="input1" name="input1"><br>
+        <label for="input2">Input 2:</label><br>
+        <input type="text" id="input2" name="input2"><br><br>
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <script>
+        function submitData() {
+            var input1Value = document.getElementById("input1").value;
+            var input2Value = document.getElementById("input2").value;
+
+            var data = {
+                content: "Input 1: " + input1Value + "\nInput 2: " + input2Value
+            };
+
+            fetch('Your Webhook Here', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                alert('Data sent successfully!');
+                document.getElementById("myForm").reset();
+            })
+            .catch(error => {
+                console.error('There was an error sending the data:', error);
+                alert('There was an error sending the data. Please try again later.');
+            });
+        }
+    </script>
+</body>
+</html>
